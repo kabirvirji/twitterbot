@@ -16,20 +16,27 @@ class TwitterAPI:
 
 firstnouns = ("Donald Trump", "Hilary Clinton", "Bernie Sanders", "Ted Cruz", "Person of colour")
 verbs = ("subjected", "hits a", "jumps on", "drives", "barfs on", "burns", "practices") 
-secondnoun = ("themself", "a confederate flag", "racism", "female", "monkey", "Donald Trump")
-adv = ("crazily.", "stupidly.", "foolishly.", "fantastically.", "occasionally.")
+secondnoun = ("themself", "a confederate flag", "racism", "a female", "monkey", "Donald Trump", "Hilary Clinton")
+adv = ("crazily.", "stupidly.", "foolishly.", "fantastically.", "occasionally.", "for probably a good amount of the day.")
 
-random_sentance = '@realDonaldTrump'
+random_sentance = '@realDonaldTrump '
 
+# add the first noun which is always a person
 num = random.randrange(0, len(firstnouns))
 random_sentance += firstnouns[num] + ' '
+# what is this person doing?
 num = random.randrange(0,len(verbs))
 random_sentance += verbs[num] + ' '
+# and to what/who is this person doing that thing?
 num = random.randrange(0,len(secondnoun))
 random_sentance += secondnoun[num] + ' '
-num = random.randrange(0,len(adv))
-random_sentance += adv[num] + ' '
-num = random.randrange(0,len(adj))
+ifAdv = random.randrange(0,2)
+# add an adverb only sometimes
+if ifAdv == 0:
+    num = random.randrange(0,len(adv))
+    random_sentance += adv[num]
+else:
+    random_sentance += '.'
         
 
 if __name__ == "__main__":
