@@ -14,13 +14,22 @@ class TwitterAPI:
     def tweet(self, message):
         self.api.update_status(status=message)
 
-nouns = ("puppy", "car", "rabbit", "girl", "monkey")
-verbs = ("runs", "hits", "jumps", "drives", "barfs") 
-adv = ("crazily.", "dutifully.", "foolishly.", "merrily.", "occasionally.")
-adj = ("adorable", "clueless", "dirty", "odd", "stupid")
-num = random.randrange(0,5)
+firstnouns = ("Donald Trump", "Hilary Clinton", "Bernie Sanders", "Ted Cruz", "Person of colour")
+verbs = ("subjected", "hits a", "jumps on", "drives", "barfs on", "burns", "practices") 
+secondnoun = ("themself", "a confederate flag", "racism", "female", "monkey", "Donald Trump")
+adv = ("crazily.", "stupidly.", "foolishly.", "fantastically.", "occasionally.")
 
-random_sentance = '@DonaldJTrump' + nouns[num] + ' ' + verbs[num] + ' ' + adv[num] + ' ' + adj[num]
+random_sentance = '@realDonaldTrump'
+
+num = random.randrange(0, len(firstnouns))
+random_sentance += firstnouns[num] + ' '
+num = random.randrange(0,len(verbs))
+random_sentance += verbs[num] + ' '
+num = random.randrange(0,len(secondnoun))
+random_sentance += secondnoun[num] + ' '
+num = random.randrange(0,len(adv))
+random_sentance += adv[num] + ' '
+num = random.randrange(0,len(adj))
         
 
 if __name__ == "__main__":
