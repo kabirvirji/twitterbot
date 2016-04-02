@@ -2,13 +2,15 @@ import tweepy
 import random
 import time
 
+tweetSpeed = 20
+
 firstnouns = ("Donald Trump", "Hilary Clinton", "Bernie Sanders", "Ted Cruz", "Person of colour", \
                 "Anonymous", "A Fox News Reporter")
 verbs = ("subjected", "hits", "jumps on", "drives", "barfs on", "burns", "practices") 
 secondnoun = ("themself", "a confederate flag", "racism", "a female", "an eagle", "Donald Trump", \
                 "Hilary Clinton", "Anonymous", "a Donald Trump protester")
-adv = ("crazily.", "stupidly.", "foolishly.", "fantastically.", "occasionally.", \
-                "for probably a good amount of the day.", "arrogantly", "awkwardly", "compassionately", \
+adv = ("crazily.", "stupidly", "foolishly", "fantastically", "occasionally", \
+                "for probably a good amount of the day", "arrogantly", "awkwardly", "compassionately", \
                 "cunningly", "emotionally", "greedily", "kindheartedly", "lovingly", "occasionally", \
                 "passionately", "respectfully", "ruthlessly", "subtly", "wiggly")
 
@@ -44,13 +46,12 @@ class TwitterAPI:
                 if ifAdv == 0:
                     num = random.randrange(0,len(adv))
                     random_sentance += adv[num]
-                else:
-                    random_sentance += '.'
+                random_sentance += '.'
 
                 # tweet the sentence
                 twitter.tweet(random_sentance)
                 # wait a minute then go again
-                time.sleep(60)
+                time.sleep(tweetSpeed)
         else:
             for i in range(x):
                 random_sentance = '@realDonaldTrump '
@@ -69,14 +70,13 @@ class TwitterAPI:
                 if ifAdv == 0:
                     num = random.randrange(0,len(adv))
                     random_sentance += adv[num]
-                else:
-                    random_sentance += '.'
+                random_sentance += '.'
 
                 # tweet the sentence
                 twitter.tweet(random_sentance)
                 print (x, 'times tweeted')
                 # wait a minute then go again
-                time.sleep(60)
+                time.sleep(tweetSpeed)
         
 
 if __name__ == "__main__":
