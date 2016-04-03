@@ -6,7 +6,8 @@ tweetSpeed = 20
 
 firstnouns = ("Donald Trump", "Hilary Clinton", "Bernie Sanders", "Ted Cruz", "Person of colour", \
                 "Anonymous", "A Fox News Reporter")
-verbs = ("subjected", "hits", "jumps on", "drives", "barfs on", "burns", "practices") 
+verbs = ("subjected", "hits", "jumps on", "barfs on", "burns", "practices", "appreciates", "criticized", \
+                "forgives", "kissed", "attacks", ) 
 secondnoun = ("themself", "a confederate flag", "racism", "a female", "an eagle", "Donald Trump", \
                 "Hilary Clinton", "Anonymous", "a Donald Trump protester")
 adv = ("crazily.", "stupidly", "foolishly", "fantastically", "occasionally", \
@@ -28,8 +29,8 @@ class TwitterAPI:
         self.api.update_status(status=message)
 
     def trumpTrumpXTimes (self, x):
-        if x == '-1':
-            while (true):
+        if x == -1:
+            while (True):
                 random_sentance = '@realDonaldTrump '
 
                 # add the first noun which is always a person
@@ -81,4 +82,9 @@ class TwitterAPI:
 
 if __name__ == "__main__":
     twitter = TwitterAPI()
-    twitter.trumpTrumpXTimes(2)
+    # x = int(input("How many times should we tweet at Trump?: "))
+    # tweetSpeed = int(input("Every how many seconds should we tweet at him?: "))
+    # twitter.trumpTrumpXTimes(x)
+    recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
+
+    [print('\n' + x) for x in recent_tweets]
