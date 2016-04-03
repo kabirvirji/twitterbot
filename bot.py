@@ -16,7 +16,11 @@ adv = ("crazily.", "stupidly", "foolishly", "fantastically", "occasionally", \
                 "passionately", "respectfully", "ruthlessly", "subtly", "wiggly")
 
 # make the set of states
-file = open('states.txt', 'r')
+s = []
+f = open('places.txt', 'r')
+s = set(x.strip() for x in f.readlines())
+print(s)
+
 
 class TwitterAPI:
     def __init__(self):
@@ -88,14 +92,14 @@ if __name__ == "__main__":
     # x = int(input("How many times should we tweet at Trump?: "))
     # tweetSpeed = int(input("Every how many seconds should we tweet at him?: "))
     # twitter.trumpTrumpXTimes(x)
-    recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
+    # recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
 
-    for tweet in range(len(recent_tweets)):
-        if 'thank' in recent_tweets[tweet].lower():
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('thank', 'fuck')
-            new_tweet = new_tweet.replace('Thank', 'Fuck')
-            print(new_tweet)
-            recent_tweets[tweet] = new_tweet
-    # print all the tweets
-    #[print('\n' + x) for x in recent_tweets]
+    # for tweet in range(len(recent_tweets)):
+    #     if 'thank' in recent_tweets[tweet].lower():
+    #         new_tweet = recent_tweets[tweet]
+    #         new_tweet = new_tweet.replace('thank', 'fuck')
+    #         new_tweet = new_tweet.replace('Thank', 'Fuck')
+    #         print(new_tweet)
+    #         recent_tweets[tweet] = new_tweet
+    # # print all the tweets
+    # [print('\n' + x) for x in recent_tweets]
