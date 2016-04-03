@@ -2,19 +2,6 @@ import tweepy
 import random
 import time
 
-tweetSpeed = 20
-
-firstnouns = ("Donald Trump", "Hilary Clinton", "Bernie Sanders", "Ted Cruz", "Person of colour", \
-                "Anonymous", "A Fox News Reporter")
-verbs = ("subjected", "hits", "jumps on", "barfs on", "burns", "practices", "appreciates", "criticized", \
-                "forgives", "kissed", "attacks", ) 
-secondnoun = ("themself", "a confederate flag", "racism", "a female", "an eagle", "Donald Trump", \
-                "Hilary Clinton", "Anonymous", "a Donald Trump protester")
-adv = ("crazily.", "stupidly", "foolishly", "fantastically", "occasionally", \
-                "for probably a good amount of the day", "arrogantly", "awkwardly", "compassionately", \
-                "cunningly", "emotionally", "greedily", "kindheartedly", "lovingly", "occasionally", \
-                "passionately", "respectfully", "ruthlessly", "subtly", "wiggly")
-
 insults = ("shitty {}", "disgusting {}", "terrible, just terrible {}", "{}, absolutely tremendous", \
     "the great shithole of {}", "{}, who would ever want to go there?")
 
@@ -38,57 +25,6 @@ class TwitterAPI:
     def tweet(self, message):
         self.api.update_status(status=message)
 
-    def trumpTrumpXTimes (self, x):
-        if x == -1:
-            while (True):
-                random_sentance = '@realDonaldTrump '
-
-                # add the first noun which is always a person
-                num = random.randrange(0, len(firstnouns))
-                random_sentance += firstnouns[num] + ' '
-                # what is this person doing?
-                num = random.randrange(0,len(verbs))
-                random_sentance += verbs[num] + ' '
-                # and to what/who is this person doing that thing?
-                num = random.randrange(0,len(secondnoun))
-                random_sentance += secondnoun[num] + ' '
-                ifAdv = random.randrange(0,2)
-                # add an adverb only sometimes
-                if ifAdv == 0:
-                    num = random.randrange(0,len(adv))
-                    random_sentance += adv[num]
-                random_sentance += '.'
-
-                # tweet the sentence
-                twitter.tweet(random_sentance)
-                # wait a minute then go again
-                time.sleep(tweetSpeed)
-        else:
-            for i in range(x):
-                random_sentance = '@realDonaldTrump '
-
-                # add the first noun which is always a person
-                num = random.randrange(0, len(firstnouns))
-                random_sentance += firstnouns[num] + ' '
-                # what is this person doing?
-                num = random.randrange(0,len(verbs))
-                random_sentance += verbs[num] + ' '
-                # and to what/who is this person doing that thing?
-                num = random.randrange(0,len(secondnoun))
-                random_sentance += secondnoun[num] + ' '
-                ifAdv = random.randrange(0,2)
-                # add an adverb only sometimes
-                if ifAdv == 0:
-                    num = random.randrange(0,len(adv))
-                    random_sentance += adv[num]
-                random_sentance += '.'
-
-                # tweet the sentence
-                twitter.tweet(random_sentance)
-                print (x, 'times tweeted')
-                # wait a minute then go again
-                time.sleep(tweetSpeed)
-
 def change(tweet, f, to):
 
     if f in tweet:
@@ -100,12 +36,13 @@ def change(tweet, f, to):
         
 
 if __name__ == "__main__":
+    # start up API instance
     twitter = TwitterAPI()
-    # x = int(input("How many times should we tweet at Trump?: "))
-    # tweetSpeed = int(input("Every how many seconds should we tweet at him?: "))
-    # twitter.trumpTrumpXTimes(x)
+
+    # get recent tweets in a list of strings, each being a tweet
     recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
 
+    # update each tweet
     for tweet in range(len(recent_tweets)):
 
         recent_tweets[tweet] = change(recent_tweets[tweet], \
@@ -140,16 +77,16 @@ if __name__ == "__main__":
         recent_tweets[tweet] = change(recent_tweets[tweet], \
             'america', random.sample(places, 1)[0])
 
-
-
         split_tweet = recent_tweets[tweet].split()
-        # for word in split_tweet:
-        #     if word in places:
-        #         word = getInsult(word)
         for word in places:
             for i in range(len(split_tweet)):
                 if word.lower() in split_tweet[i].lower():
                     split_tweet[i] = getInsult(split_tweet[i])
         recent_tweets[tweet] = ' '.join(split_tweet)
-    # # print all the tweets
+    # print all the tweets in console
     [print('\n' + x) for x in recent_tweets]
+
+    # tweet each new tweet if it fits the character limit
+    for tweet in recent_tweets:
+        if len(tweet) <= 140:
+            twitter.tweet(tweet)
