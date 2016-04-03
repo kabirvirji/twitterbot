@@ -133,6 +133,14 @@ if __name__ == "__main__":
         recent_tweets[tweet] = change(recent_tweets[tweet], \
             '!', '?')
 
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'America', random.sample(places, 1)[0])
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'AMERICA', random.sample(places, 1)[0])
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'america', random.sample(places, 1)[0])
+
+
 
         split_tweet = recent_tweets[tweet].split()
         # for word in split_tweet:
