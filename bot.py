@@ -15,7 +15,8 @@ adv = ("crazily.", "stupidly", "foolishly", "fantastically", "occasionally", \
                 "cunningly", "emotionally", "greedily", "kindheartedly", "lovingly", "occasionally", \
                 "passionately", "respectfully", "ruthlessly", "subtly", "wiggly")
 
-insults = ("shitty {}", "disgusting {}", "terrible, just terrible {}", "{}, absolutely tremendous", "")
+insults = ("shitty {}", "disgusting {}", "terrible, just terrible {}", "{}, absolutely tremendous", \
+    "the great shithole of {}", "{}, who would ever want to go there?")
 
 # make the set of places
 f = open('places.txt', 'r')
@@ -87,6 +88,15 @@ class TwitterAPI:
                 print (x, 'times tweeted')
                 # wait a minute then go again
                 time.sleep(tweetSpeed)
+
+def change(tweet, f, to):
+
+    if f in tweet:
+        new_tweet = tweet
+        new_tweet = new_tweet.replace(f, to)
+        return new_tweet
+    else:
+        return tweet
         
 
 if __name__ == "__main__":
@@ -97,42 +107,29 @@ if __name__ == "__main__":
     recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
 
     for tweet in range(len(recent_tweets)):
-        if 'thank' in recent_tweets[tweet].lower():
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('thank', 'fuck')
-            new_tweet = new_tweet.replace('Thank', 'Fuck')
-            recent_tweets[tweet] = new_tweet
 
-        if 'nice' in recent_tweets[tweet].lower():
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('nice', 'shitty')
-            new_tweet = new_tweet.replace('Nice', 'Shitty')
-            recent_tweets[tweet] = new_tweet
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            '#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
 
-        if '#MakeAmericaGreatAgain' in recent_tweets[tweet]:
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
-            recent_tweets[tweet] = new_tweet
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'thank', 'fuck')
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'Thank', 'Fuck')
 
-        if '#VoteTrump' in recent_tweets[tweet]:
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('#VoteTrump', '#DontTrump')
-            recent_tweets[tweet] = new_tweet
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'nice', 'shitty')
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'Nice', 'Shitty')
 
-        if 'Trump' in recent_tweets[tweet]:
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('Trump', 'Drumpf')
-            recent_tweets[tweet] = new_tweet
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            '#VoteTrump', '#DontTrump')
+        
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            'Trump', 'Drumpf')
 
-        if '!' in recent_tweets[tweet]:
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('!', '?')
-            recent_tweets[tweet] = new_tweet
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
+            '!', '?')
 
-        elif '?' in recent_tweets[tweet]:
-            new_tweet = recent_tweets[tweet]
-            new_tweet = new_tweet.replace('?', '!')
-            recent_tweets[tweet] = new_tweet
 
         split_tweet = recent_tweets[tweet].split()
         # for word in split_tweet:
