@@ -112,6 +112,9 @@ if __name__ == "__main__":
             '#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
 
         recent_tweets[tweet] = change(recent_tweets[tweet], \
+            ' he ', ' Obama ')
+
+        recent_tweets[tweet] = change(recent_tweets[tweet], \
             'thank', 'fuck')
         recent_tweets[tweet] = change(recent_tweets[tweet], \
             'Thank', 'Fuck')
