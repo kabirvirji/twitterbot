@@ -58,6 +58,13 @@ if __name__ == "__main__":
         for tweet in range(len(recent_tweets)):
             if statuses[tweet].id > newest_id:
 
+                split_tweet = recent_tweets[tweet].split()
+                for word in places:
+                    for i in range(len(split_tweet)):
+                        if word.lower() in split_tweet[i].lower():
+                            split_tweet[i] = getInsult(split_tweet[i])
+                recent_tweets[tweet] = ' '.join(split_tweet)
+
                 recent_tweets[tweet] = change(recent_tweets[tweet], \
                     '#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
 
@@ -112,13 +119,6 @@ if __name__ == "__main__":
 
                 recent_tweets[tweet] = change(recent_tweets[tweet], \
                     '@FoxNews', '@FoxNews (foxy ;) )')
-
-                split_tweet = recent_tweets[tweet].split()
-                for word in places:
-                    for i in range(len(split_tweet)):
-                        if word.lower() in split_tweet[i].lower():
-                            split_tweet[i] = getInsult(split_tweet[i])
-                recent_tweets[tweet] = ' '.join(split_tweet)
 
         # print all the tweets in console
         for tweet in range(len(recent_tweets)):
