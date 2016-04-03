@@ -3,14 +3,11 @@ import random
 import time
 
 insults = ("shitty {}", "disgusting {}", "terrible, just terrible {}", "{}, absolutely tremendous", \
-    "the great shithole of {}", "{}, who would ever want to go there?")
+            "the great shithole of {}", "{} (who would ever want to go there?)")
 
 # make the set of places
 f = open('places.txt', 'r')
 places = set(x.strip() for x in f.readlines())
-
-def getInsult(word):
-        return insults[random.randrange(0, len(insults))].format(word)
 
 class TwitterAPI:
     def __init__(self):
@@ -25,14 +22,24 @@ class TwitterAPI:
     def tweet(self, message):
         self.api.update_status(status=message)
 
-def change(tweet, f, to):
+def getInsult(word):
+        return insults[random.randrange(0, len(insults))].format(word)
 
-    if f in tweet:
-        new_tweet = tweet
-        new_tweet = new_tweet.replace(f, to)
-        return new_tweet
+def change(tweet, f, to, num=None):
+    if num is None:
+        if f in tweet:
+            new_tweet = tweet
+            new_tweet = new_tweet.replace(f, to)
+            return new_tweet
+        else:
+            return tweet
     else:
-        return tweet
+        if f in tweet:
+            new_tweet = tweet
+            new_tweet = new_tweet.replace(f, to, 1)
+            return new_tweet
+        else:
+            return tweet
         
 
 if __name__ == "__main__":
@@ -40,53 +47,91 @@ if __name__ == "__main__":
     twitter = TwitterAPI()
 
     # get recent tweets in a list of strings, each being a tweet
-    recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
+    statuses = twitter.api.user_timeline(user_id='25073877', count=200)
+    recent_tweets = [x.text for x in statuses]
+    ids = [x.id for x in statuses]
+    newest_id = 0
 
-    # update each tweet
-    for tweet in range(len(recent_tweets)):
+    # infinite loop
+    while(True):
+        # update each tweet
+        for tweet in range(len(recent_tweets)):
+            if statuses[tweet].id > newest_id:
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            '#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    '#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            ' he ', ' Obama ')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    ' he ', ' Obama ')
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'thank', 'fuck')
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'Thank', 'Fuck')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'thank', 'fuck')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'Thank', 'Fuck')
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'nice', 'shitty')
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'Nice', 'Shitty')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'nice', 'shitty')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'Nice', 'Shitty')
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            '#VoteTrump', '#DontTrump')
-        
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'Trump', 'Drumpf')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    '#VoteTrump', '#DontTrump')
+                
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'Trump', 'Drumpf')
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            '!', '?')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    '!', '?')
 
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'America', random.sample(places, 1)[0])
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'AMERICA', random.sample(places, 1)[0])
-        recent_tweets[tweet] = change(recent_tweets[tweet], \
-            'america', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'America', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'AMERICA', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'america', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    ' US ', ' ' + random.sample(places, 1)[0] + ' ')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'united states', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'United States', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'UNITED STATES', random.sample(places, 1)[0])
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'U.S.', random.sample(places, 1)[0])
 
-        split_tweet = recent_tweets[tweet].split()
-        for word in places:
-            for i in range(len(split_tweet)):
-                if word.lower() in split_tweet[i].lower():
-                    split_tweet[i] = getInsult(split_tweet[i])
-        recent_tweets[tweet] = ' '.join(split_tweet)
-    # print all the tweets in console
-    [print('\n' + x) for x in recent_tweets]
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'Ted', 'Ced')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'Cruz', 'Truz')
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'Lyin', 'Homie G')
 
-    # tweet each new tweet if it fits the character limit
-    for tweet in recent_tweets:
-        if len(tweet) <= 140:
-            twitter.tweet(tweet)
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    'her', 'her (or his? who knows)', 1)
+
+                recent_tweets[tweet] = change(recent_tweets[tweet], \
+                    '@FoxNews', '@FoxNews (foxy ;) )')
+
+                split_tweet = recent_tweets[tweet].split()
+                for word in places:
+                    for i in range(len(split_tweet)):
+                        if word.lower() in split_tweet[i].lower():
+                            split_tweet[i] = getInsult(split_tweet[i])
+                recent_tweets[tweet] = ' '.join(split_tweet)
+
+        # print all the tweets in console
+        for tweet in range(len(recent_tweets)):
+            if '\u2019' not in recent_tweets[tweet] and statuses[tweet].id > newest_id and len(recent_tweets[tweet]) <= 140:
+                print(recent_tweets[tweet] + '\n')
+
+        # tweet each new tweet if it fits the character limit
+        for tweet in range(len(recent_tweets)):
+            if statuses[tweet].id > newest_id and len(recent_tweets[tweet]) <= 140:
+                twitter.tweet(recent_tweets[tweet])
+                time.sleep(30)
+
+        time.sleep(1800)
+
+        newest_id = statuses[0].id
+        statuses = twitter.api.user_timeline(user_id='25073877', count=200)
