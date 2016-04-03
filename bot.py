@@ -15,6 +15,9 @@ adv = ("crazily.", "stupidly", "foolishly", "fantastically", "occasionally", \
                 "cunningly", "emotionally", "greedily", "kindheartedly", "lovingly", "occasionally", \
                 "passionately", "respectfully", "ruthlessly", "subtly", "wiggly")
 
+# make the set of states
+file = open('states.txt', 'r')
+
 class TwitterAPI:
     def __init__(self):
         consumer_key = "WhLHy9vrJkUcUxwk4yMzVCBHv"
@@ -87,4 +90,12 @@ if __name__ == "__main__":
     # twitter.trumpTrumpXTimes(x)
     recent_tweets = [x.text for x in twitter.api.user_timeline(user_id='25073877', count=5)]
 
-    [print('\n' + x) for x in recent_tweets]
+    for tweet in range(len(recent_tweets)):
+        if 'thank' in recent_tweets[tweet].lower():
+            new_tweet = recent_tweets[tweet]
+            new_tweet = new_tweet.replace('thank', 'fuck')
+            new_tweet = new_tweet.replace('Thank', 'Fuck')
+            print(new_tweet)
+            recent_tweets[tweet] = new_tweet
+    # print all the tweets
+    #[print('\n' + x) for x in recent_tweets]
