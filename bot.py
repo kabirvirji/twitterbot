@@ -152,7 +152,7 @@ if __name__ == "__main__":
                 done = True
 
             # tweet each new tweet if it fits the character limit
-            for tweet in range(len(recent_tweets)):
+            for tweet in range(len(recent_tweets) - 1, -1, -1):
                 if statuses[tweet].id > newest_id and len(recent_tweets[tweet]) <= 140:
                     twitter.tweet(recent_tweets[tweet])
                     time.sleep(30)
