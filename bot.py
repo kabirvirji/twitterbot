@@ -59,8 +59,10 @@ if __name__ == "__main__":
         while not done:
             try:
                 # get recent tweets in a list of strings, each being a tweet
-                statuses = twitter.api.user_timeline(user_id='25073877', count=200)
+                statuses = twitter.api.user_timeline(user_id='25073877', count=1)
+                print(statuses)
                 recent_tweets = [x.text for x in statuses]
+                print(recent_tweets)
                 ids = [x.id for x in statuses]
 
                 # update each tweet
@@ -76,6 +78,10 @@ if __name__ == "__main__":
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             '#MakeAmericaGreatAgain', '#MakeAmericaShittyAgain')
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            '#VoteTrump', '#DontTrump')
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            '#TrumpTrain', '#ChuggaChuggaChooChoo')
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             ' he ', ' Obama ')
@@ -89,9 +95,6 @@ if __name__ == "__main__":
                             'nice', 'shitty')
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'Nice', 'Shitty')
-
-                        recent_tweets[tweet] = change(recent_tweets[tweet], \
-                            '#VoteTrump', '#DontTrump')
                         
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'Trump', 'Drumpf')
@@ -102,7 +105,7 @@ if __name__ == "__main__":
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'America', random.sample(places, 1)[0])
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
-                            'AMERICA', random.sample(places, 1)[0])
+                            'AMERICA', random.sample(places, 1)[0].upper())
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'america', random.sample(places, 1)[0])
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
@@ -112,7 +115,7 @@ if __name__ == "__main__":
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'United States', random.sample(places, 1)[0])
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
-                            'UNITED STATES', random.sample(places, 1)[0])
+                            'UNITED STATES', random.sample(places, 1)[0].upper())
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'U.S.', random.sample(places, 1)[0])
 
@@ -135,7 +138,18 @@ if __name__ == "__main__":
                             '@FoxNews', '@FoxNews (foxy ;) )')
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
-                            'wall', 'a HUGE FUCKING WALL')
+                            'wall', 'HUGE FUCKING WALL')
+
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            'vote', 'give up')
+
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            'gun', 'gun (pew pew)')
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            'guns', 'guns (pew pew)')
+
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            'Enjoy', 'HAHAHAHA')
 
                 # print all the tweets in console
                 for tweet in range(len(recent_tweets)):
