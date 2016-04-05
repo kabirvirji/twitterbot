@@ -53,17 +53,15 @@ if __name__ == "__main__":
     # start up API instance
     twitter = TwitterAPI()
 
-    newest_id = 0
+    newest_id = twitter.api.user_timeline(count=1)[0].id
     while (True):
         done = False
         while not done:
             try:
                 # get recent tweets in a list of strings, each being a tweet
-                statuses = twitter.api.user_timeline(user_id='25073877', count=1)
-                print(statuses)
+                statuses = twitter.api.user_timeline(user_id='25073877', count=20)
                 recent_tweets = [x.text for x in statuses]
-                print(recent_tweets)
-                ids = [x.id for x in statuses]
+                ids = [print(x.id) for x in statuses]
 
                 # update each tweet
                 for tweet in range(len(recent_tweets)):
@@ -168,7 +166,8 @@ if __name__ == "__main__":
             # tweet each new tweet if it fits the character limit
             for tweet in range(len(recent_tweets) - 1, -1, -1):
                 if statuses[tweet].id > newest_id and len(recent_tweets[tweet]) <= 140:
-                    twitter.tweet(recent_tweets[tweet])
+                    #twitter.tweet(recent_tweets[tweet])
+                    print("Tweeted!")
                     time.sleep(30)
 
             time.sleep(1800)
