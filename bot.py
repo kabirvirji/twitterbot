@@ -65,13 +65,20 @@ if __name__ == "__main__":
 
                 # update each tweet
                 for tweet in range(len(recent_tweets)):
+                    # if the tweet is newer than our most recent tweet, continue
                     if statuses[tweet].id > newest_id:
 
+                        # split the tweet up and check each word for being a country or state
                         split_tweet = recent_tweets[tweet].split()
                         for word in places:
                             for i in range(len(split_tweet)):
-                                if word.lower() in split_tweet[i].lower():
+                                # if the word is orginally uppercase then keep it uppercase
+                                if word.isupper() and word.lower() in split_tweet[i].lower():
+                                    split_tweet[i] = getInsult(split_tweet[i]).upper()
+                                # otherwise make it lowercase
+                                elif word.lower() in split_tweet[i].lower():
                                     split_tweet[i] = getInsult(split_tweet[i])
+                        # un-split up the tweet
                         recent_tweets[tweet] = ' '.join(split_tweet)
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
