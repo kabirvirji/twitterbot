@@ -59,7 +59,7 @@ if __name__ == "__main__":
         while not done:
             try:
                 # get recent tweets in a list of strings, each being a tweet
-                statuses = twitter.api.user_timeline(user_id='25073877', count=20)
+                statuses = twitter.api.user_timeline(user_id='25073877', count=100)
                 recent_tweets = [x.text for x in statuses]
                 ids = [print(x.id) for x in statuses]
 
@@ -67,7 +67,8 @@ if __name__ == "__main__":
                 for tweet in range(len(recent_tweets)):
                     # if the tweet is newer than our most recent tweet, continue
                     if statuses[tweet].id > newest_id:
-
+                        # create a copy ofteh string
+                        copy = recent_tweets[tweet]
                         # split the tweet up and check each word for being a country or state
                         split_tweet = recent_tweets[tweet].split()
                         for word in places:
@@ -105,9 +106,6 @@ if __name__ == "__main__":
                             'Trump', 'Drumpf')
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
-                            '!', '?')
-
-                        recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'America', random.sample(places, 1)[0])
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'AMERICA', random.sample(places, 1)[0].upper())
@@ -137,7 +135,7 @@ if __name__ == "__main__":
                             'Clinton', 'Hlinton')
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
-                            'her', 'her (or his? who knows)', 1)
+                            'her ', 'her (or his? who knows) ', 1)
 
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             '@FoxNews', '@FoxNews (foxy ;) )')
@@ -156,6 +154,15 @@ if __name__ == "__main__":
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'Enjoy', 'HAHAHAHA')
 
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            'veteran ', 'veteran (pew pew pew) ')
+
+                        if recent_tweets[tweet] == copy:
+                            recent_tweets[tweet] = 'Trump' * 30
+
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            '!', '?')
+
                 # print all the tweets in console
                 for tweet in range(len(recent_tweets)):
                     if recent_tweets[tweet] is not None and \
@@ -173,11 +180,11 @@ if __name__ == "__main__":
             # tweet each new tweet if it fits the character limit
             for tweet in range(len(recent_tweets) - 1, -1, -1):
                 if statuses[tweet].id > newest_id and len(recent_tweets[tweet]) <= 140:
-                    #twitter.tweet(recent_tweets[tweet])
+                    twitter.tweet(recent_tweets[tweet])
                     print("Tweeted!")
-                    time.sleep(30)
+                    time.sleep(15)
 
-            time.sleep(1800)
+            time.sleep(60)
 
             newest_id = statuses[0].id
             statuses = twitter.api.user_timeline(user_id='25073877', count=200)
