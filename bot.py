@@ -157,6 +157,9 @@ if __name__ == "__main__":
                         recent_tweets[tweet] = change(recent_tweets[tweet], \
                             'veteran ', 'veteran (pew pew pew) ')
 
+                        recent_tweets[tweet] = change(recent_tweets[tweet], \
+                            'great', 'REALLY GOD DAMN FUCKING SWEET')
+
                         if recent_tweets[tweet] == copy:
                             recent_tweets[tweet] = 'Trump' * 30
 
